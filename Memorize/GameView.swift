@@ -13,20 +13,22 @@ struct GameView: View {
     
     var body: some View {
         NavigationView {
-            Grid(emojiGame.cards) { card in
-                CardView(card: card).onTapGesture {
-                    self.emojiGame.choose(card: card)
-                }.padding(5)
-            }
-            .padding()
-            .foregroundColor(emojiGame.theme.color)
-            .navigationBarTitle(emojiGame.theme.name)
-            .navigationBarItems(trailing:
-                Button("New Game") {
-                    self.emojiGame.newGame()
+            VStack {
+                Text("Score: 0").alignmentGuide(.leading) { d in d[.leading] }
+                Grid(emojiGame.cards) { card in
+                    CardView(card: card).onTapGesture {
+                        self.emojiGame.choose(card: card)
+                    }.padding(5)
                 }
-            )
-        }
+                .padding()
+                .foregroundColor(emojiGame.theme.color)
+                .navigationBarTitle(emojiGame.theme.name)
+                .navigationBarItems(trailing:
+                    Button("New Game") {
+                        self.emojiGame.newGame()
+                    }
+                )
+            }}
     }
 }
 
@@ -43,7 +45,6 @@ struct CardView: View {
         ZStack {
             if self.card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
                 Text(self.card.content)
             } else {
                 if !card.isMatched {
@@ -52,12 +53,12 @@ struct CardView: View {
             }
         }
         .font(Font.system(size: fontSize(for: size)))
+        .shadow(radius: 2.0)
     }
     
     // MARK: - Drawing Constants
     
     let cornerRadius: CGFloat = 10.0
-    let edgeLineWidth: CGFloat = 3
     func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.height) * 0.75
     }
