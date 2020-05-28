@@ -12,18 +12,26 @@ struct GameView: View {
     @ObservedObject var emojiGame: EmojiMemoryGame
     
     var body: some View {
-        Grid(emojiGame.cards) { card in
-            CardView(card: card).onTapGesture {
-                self.emojiGame.choose(card: card)
-            }.padding(5)
+        NavigationView {
+            Grid(emojiGame.cards) { card in
+                CardView(card: card).onTapGesture {
+                    self.emojiGame.choose(card: card)
+                }.padding(5)
+            }
+            .padding()
+            .foregroundColor(emojiGame.theme.color)
+            .navigationBarTitle(emojiGame.theme.name)
+            .navigationBarItems(trailing:
+                Button("New Game") {
+                    self.emojiGame.newGame()
+                }
+            )
         }
-        .padding()
-        .foregroundColor(Color.blue)
     }
 }
 
 struct CardView: View {
-    var card: MemoryGame<String>.Card
+    var card: MemoryGame<String, Color>.Card
     
     var body: some View {
         GeometryReader(content: {geometry in

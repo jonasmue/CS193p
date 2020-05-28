@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> where CardContent: Equatable {
+struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
     var cards: Array<Card>
+    var theme: Theme
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {cards.indices.filter { cards[$0].isFaceUp }.only}
         set {
@@ -19,14 +20,16 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
+    init(theme: Theme) {
         cards = Array<Card>()
+        let numberOfPairsOfCards = theme.numCardPairs ?? Int.random(in: 2..<theme.contents.count)
         for pairIndex in 0..<numberOfPairsOfCards {
-            let content = cardContentFactory(pairIndex)
+            let content = theme.contents[pairIndex % theme.contents.count]
             cards.append(Card(id: pairIndex * 2, content: content))
             cards.append(Card(id: pairIndex * 2 + 1, content: content))
         }
         cards.shuffle()
+        self.theme = theme
     }
     
     mutating func choose(_ card: Card) {
@@ -48,5 +51,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent
+    }
+    
+    struct Theme {
+        var name: String
+        var contents: [CardContent]
+        var numCardPairs: Int?
+        var color: ColorType
     }
 }
