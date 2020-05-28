@@ -36,11 +36,11 @@ class EmojiMemoryGame: ObservableObject {
     func choose(card: EmojiGameModel.Card) {
         game.choose(card)
         if game.isFinished {
-            newGame()
+            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(newGame), userInfo: nil, repeats: false)
         }
     }
     
-    func newGame() {
+    @objc func newGame() {
         game = EmojiMemoryGame.createMemoryGame()
     }
     
