@@ -25,6 +25,10 @@ class EmojiMemoryGame: ObservableObject {
         game.theme
     }
     
+    var score: Int {
+        game.score
+    }
+    
     // MARK: - Intents
     
     func choose(card: MemoryGame<String, Color>.Card) {
@@ -51,7 +55,7 @@ class EmojiMemoryGame: ObservableObject {
             return MemoryGame<String, Color>.Theme(name: "Food", contents: contents, numCardPairs: nil, color: Color.red)
         case .vehicles:
             let contents = ["🚛", "🚚", "🚲", "🚠", "🏎", "🚝", "🛥", "🚁"]
-            return MemoryGame<String, Color>.Theme(name: "Vehicles", contents: contents, numCardPairs: contents.count, color: Color.red)
+            return MemoryGame<String, Color>.Theme(name: "Vehicles", contents: contents, numCardPairs: contents.count, color: Color.gray)
         case .faces:
             let contents = ["😙", "😮", "🤕", "😋", "😷", "😊", "🤖", "🤓"]
             return MemoryGame<String, Color>.Theme(name: "Faces", contents: contents, numCardPairs: nil, color: Color.yellow)

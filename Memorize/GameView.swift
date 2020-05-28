@@ -14,7 +14,7 @@ struct GameView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                Text("Score: 0")
+                Text("Score: \(emojiGame.score)")
                 Grid(emojiGame.cards) { card in
                     CardView(card: card).onTapGesture {
                         self.emojiGame.choose(card: card)
