@@ -48,10 +48,10 @@ class EmojiMemoryGame: ObservableObject {
             let contents = ["👻", "🕷", "🕸", "🎃", "🧛🏻‍♀️"]
             return MemoryGame<String, Color>.Theme(name: "Halloween", contents: contents, numCardPairs: contents.count, color: Color.orange)
         case .animals:
-            let contents = ["🦓", "🦒", "🐔", "🐰", "🐡", "🐍", "🐋", "🐥", "🐦", "🦊", "🦮"]
+            let contents = ["🦓", "🦒", "🐔", "🐰", "🐡", "🐍", "🐋", "🐥", "🐦", "🦊", "🦮", "🐙", "🐮", "🦋", "🐘", "🦞", "🦚", "🦘", "🐼", "🦆", "🦇", "🐧"]
             return MemoryGame<String, Color>.Theme(name: "Animals", contents: contents, numCardPairs: nil, color: Color.green)
         case .food:
-            let contents = ["🧀", "🥕", "🍩", "🌽", "🍶", "🍺", "🍏", "🍞", "🍪", "🧇", "🌯"]
+            let contents = ["🧀", "🥕", "🍩", "🌽", "🍶", "🍺", "🍏", "🍞", "🍪", "🧇", "🌯", "🍑", "🍱", "🥒", "🥑", "🍔", "🍰", "🍋", "🍉", "🧆", "🥯", "🥗", "🍟"]
             return MemoryGame<String, Color>.Theme(name: "Food", contents: contents, numCardPairs: nil, color: Color.red)
         case .vehicles:
             let contents = ["🚛", "🚚", "🚲", "🚠", "🏎", "🚝", "🛥", "🚁"]

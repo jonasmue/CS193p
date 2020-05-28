@@ -25,8 +25,9 @@ struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
     init(theme: Theme) {
         cards = Array<Card>()
         let numberOfPairsOfCards = theme.numCardPairs ?? Int.random(in: 2..<theme.contents.count)
+        let shuffledContents = theme.contents.shuffled() // In order to not always get the same contents if numberOfPairsOfCards < theme.contents.count
         for pairIndex in 0..<numberOfPairsOfCards {
-            let content = theme.contents[pairIndex % theme.contents.count]
+            let content = shuffledContents[pairIndex % theme.contents.count]
             cards.append(Card(id: pairIndex * 2, content: content))
             cards.append(Card(id: pairIndex * 2 + 1, content: content))
         }
