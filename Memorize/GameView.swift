@@ -13,14 +13,13 @@ struct GameView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Score: 0").alignmentGuide(.leading) { d in d[.leading] }
+            VStack(alignment: .leading) {
+                Text("Score: 0")
                 Grid(emojiGame.cards) { card in
                     CardView(card: card).onTapGesture {
                         self.emojiGame.choose(card: card)
-                    }.padding(5)
+                    }.padding(self.cardPadding)
                 }
-                .padding()
                 .foregroundColor(emojiGame.theme.color)
                 .navigationBarTitle(emojiGame.theme.name)
                 .navigationBarItems(trailing:
@@ -28,8 +27,14 @@ struct GameView: View {
                         self.emojiGame.newGame()
                     }
                 )
-            }}
+            }.padding(.horizontal)
+        }
     }
+    
+    
+    // MARK: - Drawing Constants
+    
+    let cardPadding: CGFloat = 6.5
 }
 
 struct CardView: View {
