@@ -10,21 +10,26 @@ import SwiftUI
 
 struct GameView: View {
     @ObservedObject var emojiGame: EmojiMemoryGame
-    
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
                 Text("Score: \(emojiGame.score)")
                 Grid(emojiGame.cards) { card in
                     CardView(card: card).onTapGesture {
-                        self.emojiGame.choose(card: card)
+                        withAnimation {
+                            if !card.isFaceUp {
+                            self.emojiGame.choose(card: card)
+                            }
+                        }
                     }.padding(self.cardPadding)
                 }
                 .foregroundColor(emojiGame.theme.color)
                 .navigationBarTitle(emojiGame.theme.name)
                 .navigationBarItems(trailing:
                     Button("New Game") {
-                        self.emojiGame.newGame()
+                        withAnimation(.default) {
+                            self.emojiGame.newGame()
+                        }
                     }
                 )
             }.padding(.horizontal)
@@ -50,7 +55,7 @@ struct CardView: View {
         ZStack {
             if self.card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                Text(self.card.content)
+                Text(self.card.content).animation(.easeOut)
             } else {
                 if !card.isMatched {
                     RoundedRectangle(cornerRadius: cornerRadius).fill()
