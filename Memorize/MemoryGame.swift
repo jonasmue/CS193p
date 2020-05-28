@@ -9,7 +9,7 @@
 import Foundation
 
 struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
-    var cards: Array<Card>
+    var cards: [Card]
     var theme: Theme
     private(set) var score = 0
     
@@ -20,6 +20,10 @@ struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
                 cards[index].isFaceUp = index == newValue
             }
         }
+    }
+    
+    var isFinished: Bool {
+        cards.filter { $0.isMatched }.count == cards.count
     }
     
     init(theme: Theme) {

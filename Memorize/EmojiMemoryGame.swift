@@ -8,20 +8,22 @@
 
 import SwiftUI
 
+typealias EmojiGameModel = MemoryGame<String, Color>
+
 class EmojiMemoryGame: ObservableObject {
-    @Published private var game: MemoryGame<String, Color> = createMemoryGame()
+    @Published private var game: EmojiGameModel = createMemoryGame()
     
-    static func createMemoryGame() -> MemoryGame<String, Color> {
-        return MemoryGame<String, Color>(theme: getRandomTheme())
+    static func createMemoryGame() -> EmojiGameModel {
+        return EmojiGameModel(theme: getRandomTheme())
     }
     
     // MARK: - Accessors
     
-    var cards: Array<MemoryGame<String, Color>.Card> {
+    var cards: Array<EmojiGameModel.Card> {
         game.cards
     }
     
-    var theme: MemoryGame<String, Color>.Theme {
+    var theme: EmojiGameModel.Theme {
         game.theme
     }
     
@@ -31,8 +33,11 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Intents
     
-    func choose(card: MemoryGame<String, Color>.Card) {
+    func choose(card: EmojiGameModel.Card) {
         game.choose(card)
+        if game.isFinished {
+            newGame()
+        }
     }
     
     func newGame() {
@@ -41,11 +46,11 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Themes
     
-    private static func getRandomTheme() -> MemoryGame<String, Color>.Theme {
+    private static func getRandomTheme() -> EmojiGameModel.Theme {
         let theme = EmojiTheme.allCases.randomElement()!
         switch theme {
         case .halloween:
-            let contents = ["👻", "🕷", "🕸", "🎃", "🧛🏻‍♀️"]
+            let contents = ["👻", "🕷", "🕸", "🎃", "🧛🏻‍♀️", "🦇", "⚰️", "🔮", "🧟‍♂️"]
             return MemoryGame<String, Color>.Theme(name: "Halloween", contents: contents, numCardPairs: contents.count, color: Color.orange)
         case .animals:
             let contents = ["🦓", "🦒", "🐔", "🐰", "🐡", "🐍", "🐋", "🐥", "🐦", "🦊", "🦮", "🐙", "🐮", "🦋", "🐘", "🦞", "🦚", "🦘", "🐼", "🦆", "🦇", "🐧"]
