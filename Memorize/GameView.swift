@@ -50,28 +50,20 @@ struct CardView: View {
         })
     }
     
+    @ViewBuilder
     private func body(for size: CGSize) -> some View {
-        ZStack {
-            if self.card.isFaceUp {
-                RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
+        if card.isFaceUp || !card.isMatched {
+            ZStack {
                 Pie(startAngle: Angle.degrees(270), endAngle: Angle.degrees(20), clockwise: true).padding(5).opacity(0.2)
-                Text(self.card.content).animation(.easeOut)
-            } else {
-                if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill()
-                }
+                Text(self.card.content).font(Font.system(size: fontSize(for: size)))
             }
+            .cardify(isFaceUp: card.isFaceUp)
         }
-        .font(Font.system(size: fontSize(for: size)))
-        .shadow(radius: 2.0)
     }
     
     // MARK: - Drawing Constants
     
-    private let cornerRadius: CGFloat = 10.0
-    private func fontSize(for size: CGSize) -> CGFloat {
-        min(size.width, size.height) * 0.7
-    }
+    private func fontSize(for size: CGSize) -> CGFloat { min(size.width, size.height) * 0.7 }
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -22,6 +22,7 @@
 		DDAB8E05247EBB190092067E /* Array+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAB8E04247EBB190092067E /* Array+Identifiable.swift */; };
 		DDAB8E07247ECAE30092067E /* Array+Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAB8E06247ECAE30092067E /* Array+Only.swift */; };
 		DDD6EA5A2485B64000F14B35 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD6EA592485B64000F14B35 /* Pie.swift */; };
+		DDD6EA5C2485BBBE00F14B35 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD6EA5B2485BBBE00F14B35 /* Cardify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		DDAB8E04247EBB190092067E /* Array+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
 		DDAB8E06247ECAE30092067E /* Array+Only.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Only.swift"; sourceTree = "<group>"; };
 		DDD6EA592485B64000F14B35 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
+		DDD6EA5B2485BBBE00F14B35 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				DD2F19FB2474233B005214FB /* AppDelegate.swift */,
 				DD2F19FD2474233B005214FB /* SceneDelegate.swift */,
 				DD2F19FF2474233B005214FB /* GameView.swift */,
+				DDD6EA5B2485BBBE00F14B35 /* Cardify.swift */,
 				DDD6EA592485B64000F14B35 /* Pie.swift */,
 				DDAB8E00247EB4290092067E /* Grid.swift */,
 				DDAB8E02247EB8830092067E /* GridLayout.swift */,
@@ -179,6 +182,7 @@
 				DDAB8E07247ECAE30092067E /* Array+Only.swift in Sources */,
 				DD2F1A002474233B005214FB /* GameView.swift in Sources */,
 				DD2F1A1224742959005214FB /* EmojiMemoryGame.swift in Sources */,
+				DDD6EA5C2485BBBE00F14B35 /* Cardify.swift in Sources */,
 				DDD6EA5A2485B64000F14B35 /* Pie.swift in Sources */,
 				DD5B26822485275400C20A2E /* Int+Square.swift in Sources */,
 				DDAB8E05247EBB190092067E /* Array+Identifiable.swift in Sources */,
