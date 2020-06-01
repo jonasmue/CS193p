@@ -43,7 +43,7 @@ struct GameView: View {
 }
 
 struct CardView: View {
-    var card: MemoryGame<String, Color>.Card
+    var card: EmojiGameModel.Card
     
     var body: some View {
         GeometryReader(content: {geometry in

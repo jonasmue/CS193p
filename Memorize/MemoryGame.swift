@@ -8,9 +8,8 @@
 
 import Foundation
 
-struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
+struct MemoryGame<CardContent> where CardContent: Equatable {
     var cards: [Card]
-    var theme: Theme
     private(set) var score = 0
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
@@ -26,17 +25,14 @@ struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
         cards.filter { $0.isMatched }.count == cards.count
     }
     
-    init(theme: Theme) {
+    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = Array<Card>()
-        let numberOfPairsOfCards = theme.numCardPairs ?? Int.random(in: 2..<theme.contents.count)
-        let shuffledContents = theme.contents.shuffled() // In order to not always get the same contents if numberOfPairsOfCards < theme.contents.count
         for pairIndex in 0..<numberOfPairsOfCards {
-            let content = shuffledContents[pairIndex % theme.contents.count]
+            let content = cardContentFactory(pairIndex)
             cards.append(Card(id: pairIndex * 2, content: content))
             cards.append(Card(id: pairIndex * 2 + 1, content: content))
         }
         cards.shuffle()
-        self.theme = theme
     }
     
     mutating func choose(_ card: Card) {
@@ -56,16 +52,7 @@ struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
     }
     
     mutating func adjustScore(_ didMatch: Bool, involving card1Idx: Int, and card2Idx: Int) {
-        if didMatch {
-            score += 2
-        } else {
-            if cards[card1Idx].seen {
-                score -= 1
-            }
-            if cards[card2Idx].seen {
-                score -= 1
-            }
-        }
+        score += didMatch ? 2 : (-cards.filter { $0.seen && ($0.id == card1Idx || $0.id == card2Idx)  }.count)
         cards[card1Idx].seen = true
         cards[card2Idx].seen = true
     }
@@ -76,12 +63,5 @@ struct MemoryGame<CardContent, ColorType> where CardContent: Equatable {
         var isMatched: Bool = false
         var seen: Bool = false
         var content: CardContent
-    }
-    
-    struct Theme {
-        var name: String
-        var contents: [CardContent]
-        var numCardPairs: Int?
-        var color: ColorType
     }
 }

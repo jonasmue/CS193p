@@ -8,69 +8,47 @@
 
 import SwiftUI
 
-typealias EmojiGameModel = MemoryGame<String, Color>
+typealias EmojiGameModel = MemoryGame<String>
 
 class EmojiMemoryGame: ObservableObject {
-    @Published private var game: EmojiGameModel = createMemoryGame()
+    @Published private var model: EmojiGameModel!
+    private (set) var theme: Theme!
     
-    static func createMemoryGame() -> EmojiGameModel {
-        return EmojiGameModel(theme: getRandomTheme())
+    init() {
+        initialize()
+    }
+    
+    private func initialize() {
+        (self.model, self.theme) = EmojiMemoryGame.createMemoryGame()
+    }
+    
+    static func createMemoryGame() -> (EmojiGameModel, Theme) {
+        let theme = EmojiMemoryGameThemeFactory.getRandomTheme()
+        let contents = theme.contents.shuffled()
+        let game = EmojiGameModel(numberOfPairsOfCards: theme.numCardPairs ?? Int.random(in: 2..<theme.contents.count)) {contents[$0 % contents.count]}
+        return (game, theme)
     }
     
     // MARK: - Accessors
     
     var cards: Array<EmojiGameModel.Card> {
-        game.cards
-    }
-    
-    var theme: EmojiGameModel.Theme {
-        game.theme
+        model.cards
     }
     
     var score: Int {
-        game.score
+        model.score
     }
     
     // MARK: - Intents
     
     func choose(card: EmojiGameModel.Card) {
-        game.choose(card)
-        if game.isFinished {
+        model.choose(card)
+        if model.isFinished {
             Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(newGame), userInfo: nil, repeats: false)
         }
     }
     
     @objc func newGame() {
-        game = EmojiMemoryGame.createMemoryGame()
-    }
-    
-    // MARK: - Themes
-    
-    private static func getRandomTheme() -> EmojiGameModel.Theme {
-        let theme = EmojiTheme.allCases.randomElement()!
-        switch theme {
-        case .halloween:
-            let contents = ["👻", "🕷", "🕸", "🎃", "🧛🏻‍♀️", "🦇", "⚰️", "🔮", "🧟‍♂️"]
-            return MemoryGame<String, Color>.Theme(name: "Halloween", contents: contents, numCardPairs: contents.count, color: Color.orange)
-        case .animals:
-            let contents = ["🦓", "🦒", "🐔", "🐰", "🐡", "🐍", "🐋", "🐥", "🐦", "🦊", "🦮", "🐙", "🐮", "🦋", "🐘", "🦞", "🦚", "🦘", "🐼", "🦆", "🦇", "🐧"]
-            return MemoryGame<String, Color>.Theme(name: "Animals", contents: contents, numCardPairs: nil, color: Color.green)
-        case .food:
-            let contents = ["🧀", "🥕", "🍩", "🌽", "🍶", "🍺", "🍏", "🍞", "🍪", "🧇", "🌯", "🍑", "🍱", "🥒", "🥑", "🍔", "🍰", "🍋", "🍉", "🧆", "🥯", "🥗", "🍟"]
-            return MemoryGame<String, Color>.Theme(name: "Food", contents: contents, numCardPairs: nil, color: Color.red)
-        case .vehicles:
-            let contents = ["🚛", "🚚", "🚲", "🚠", "🏎", "🚝", "🛥", "🚁"]
-            return MemoryGame<String, Color>.Theme(name: "Vehicles", contents: contents, numCardPairs: contents.count, color: Color.gray)
-        case .faces:
-            let contents = ["😙", "😮", "🤕", "😋", "😷", "😊", "🤖", "🤓"]
-            return MemoryGame<String, Color>.Theme(name: "Faces", contents: contents, numCardPairs: nil, color: Color.yellow)
-        case .sports:
-            let contents = ["🏈", "⚾️", "⚽️", "🥍", "⛸", "🏀"]
-            return MemoryGame<String, Color>.Theme(name: "Sports", contents: contents, numCardPairs: contents.count, color: Color.blue)
-        }
-    }
-    
-    enum EmojiTheme: CaseIterable {
-        case halloween, animals, food, vehicles, faces, sports
+        initialize()
     }
 }
