@@ -52,7 +52,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     mutating func adjustScore(_ didMatch: Bool, involving card1Idx: Int, and card2Idx: Int) {
-        score += didMatch ? 2 : (-cards.filter { $0.seen && ($0.id == card1Idx || $0.id == card2Idx)  }.count)
+        score += didMatch ? 2 : -(cards.filter { $0.seen && ($0.id == cards[card1Idx].id || $0.id == cards[card2Idx].id)  }.count)
         cards[card1Idx].seen = true
         cards[card2Idx].seen = true
     }
