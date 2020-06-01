@@ -54,6 +54,7 @@ struct CardView: View {
         ZStack {
             if self.card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
+                Pie(startAngle: Angle.degrees(270), endAngle: Angle.degrees(20), clockwise: true).padding(5).opacity(0.2)
                 Text(self.card.content).animation(.easeOut)
             } else {
                 if !card.isMatched {
@@ -69,12 +70,14 @@ struct CardView: View {
     
     private let cornerRadius: CGFloat = 10.0
     private func fontSize(for size: CGSize) -> CGFloat {
-        min(size.width, size.height) * 0.75
+        min(size.width, size.height) * 0.7
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView(emojiGame: EmojiMemoryGame())
+        let game = EmojiMemoryGame()
+        game.choose(card: game.cards[2])
+        return GameView(emojiGame: game)
     }
 }
