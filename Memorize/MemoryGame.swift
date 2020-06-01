@@ -9,10 +9,10 @@
 import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    var cards: [Card]
+    private(set) var cards: [Card]
     private(set) var score = 0
     
-    var indexOfTheOneAndOnlyFaceUpCard: Int? {
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter { cards[$0].isFaceUp }.only }
         set {
             for index in cards.indices {
@@ -26,7 +26,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
-        cards = Array<Card>()
+        cards = [Card]()
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(id: pairIndex * 2, content: content))
@@ -51,7 +51,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    mutating func adjustScore(_ didMatch: Bool, involving card1Idx: Int, and card2Idx: Int) {
+    private mutating func adjustScore(_ didMatch: Bool, involving card1Idx: Int, and card2Idx: Int) {
         score += didMatch ? 2 : -(cards.filter { $0.seen && ($0.id == cards[card1Idx].id || $0.id == cards[card2Idx].id)  }.count)
         cards[card1Idx].seen = true
         cards[card2Idx].seen = true

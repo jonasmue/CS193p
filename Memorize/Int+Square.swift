@@ -11,6 +11,6 @@ import Foundation
 extension Int {
     
     func isSquare() -> Bool {
-        round(pow((Double(self)),(0.5))) == pow((Double(self)),(0.5))
+        round(pow((Double(self)), 0.5)) == pow((Double(self)), 0.5)
     }
 }

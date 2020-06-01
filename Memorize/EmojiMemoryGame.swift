@@ -22,7 +22,7 @@ class EmojiMemoryGame: ObservableObject {
         (self.model, self.theme) = EmojiMemoryGame.createMemoryGame()
     }
     
-    static func createMemoryGame() -> (EmojiGameModel, Theme) {
+    private static func createMemoryGame() -> (EmojiGameModel, Theme) {
         let theme = EmojiMemoryGameThemeFactory.getRandomTheme()
         let contents = theme.contents.shuffled()
         // Get nicely aligned number of pairs
@@ -34,7 +34,7 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Accessors
     
-    var cards: Array<EmojiGameModel.Card> {
+    var cards: [EmojiGameModel.Card] {
         model.cards
     }
     
