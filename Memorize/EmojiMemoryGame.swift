@@ -25,7 +25,10 @@ class EmojiMemoryGame: ObservableObject {
     static func createMemoryGame() -> (EmojiGameModel, Theme) {
         let theme = EmojiMemoryGameThemeFactory.getRandomTheme()
         let contents = theme.contents.shuffled()
-        let game = EmojiGameModel(numberOfPairsOfCards: theme.numCardPairs ?? Int.random(in: 2..<theme.contents.count)) {contents[$0 % contents.count]}
+        // Get nicely aligned number of pairs
+        let numberOfCardPairs = theme.numCardPairs ??
+            Array(2..<theme.contents.count).filter {($0 * 2).isSquare()}.randomElement()!
+        let game = EmojiGameModel(numberOfPairsOfCards: numberOfCardPairs) {contents[$0 % contents.count]}
         return (game, theme)
     }
     
