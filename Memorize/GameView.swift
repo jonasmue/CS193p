@@ -16,10 +16,8 @@ struct GameView: View {
                 Text("Score: \(emojiGame.score)")
                 Grid(emojiGame.cards) { card in
                     CardView(card: card).onTapGesture {
-                        withAnimation {
-                            if !card.isFaceUp {
+                        if !card.isFaceUp {
                             self.emojiGame.choose(card: card)
-                            }
                         }
                     }.padding(self.cardPadding)
                 }
